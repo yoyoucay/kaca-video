@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require '.././vendor/autoload.php';
 class Confide extends CI_Controller {
-	
+
 	public function __construct(){
 		parent::__construct();
-		
+
 		$this->load->model('confide_models');
 		$this->load->model('user_models');
 	}
-	
+
 	public function tambah_confide(){
 		$this->confide_models->set_confide();
 		redirect('home');
@@ -17,11 +17,11 @@ class Confide extends CI_Controller {
 	public function tambah_confidePhoto(){
 		$data = array();
 		$upload = $this->confide_models->upload_confidePhoto();
-			
+
 			if($upload['result'] == "success"){ // Jika proses upload sukses
 				 // Panggil function save yang ada di GambarModel.php untuk menyimpan data ke database
 				$this->confide_models->save_confidePhoto($upload);
-				
+
 				redirect('home'); // Redirect kembali ke halaman awal / halaman view data
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
@@ -33,17 +33,17 @@ class Confide extends CI_Controller {
 	public function tambah_confideVideo(){
 		$data = array();
 		$upload = $this->confide_models->upload_confideVideo();
-			
+
 			if($upload['result'] == "success"){ // Jika proses upload sukses
 				 // Panggil function save yang ada di GambarModel.php untuk menyimpan data ke database
 				$this->confide_models->save_confideVideo($upload);
-				
+
 				redirect('home'); // Redirect kembali ke halaman awal / halaman view data
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 				die($data['message']);
 			}
-		
+
 		// $this->load->view('gambar/form', $data);
 	}
 
@@ -94,7 +94,7 @@ class Confide extends CI_Controller {
 
 			// Jika ada Form yang Belum diisi dengan benar maka akan meredirect halaman kembali.
 
-			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);			
+			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
 			$this->load->view('layouts/header');
 			$this->load->view('updateconfide/editConfidePhoto', $data);
 			$this->load->view('layouts/footer');
@@ -106,7 +106,7 @@ class Confide extends CI_Controller {
 
 
 
-		
+
 	}
 
 // ================================================
@@ -130,7 +130,7 @@ class Confide extends CI_Controller {
 
 			// Jika ada Form yang Belum diisi dengan benar maka akan meredirect halaman kembali.
 
-			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);			
+			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
 			$this->load->view('layouts/header');
 			$this->load->view('updateconfide/editConfideVideo', $data);
 			$this->load->view('layouts/footer');
@@ -148,21 +148,21 @@ class Confide extends CI_Controller {
 	public function delete_confide($confideid)
 	{
 		$this->confide_models->delete_confideUpdate($confideid);
-		
+
 		redirect('home');
 	}
-	
+
 	public function view_post($confideid){
-	    
+
 	    $query = $this->confide_models->get_details($confideid);
         if (!$query) {
-			$this->load->view('layouts/header');
+						$this->load->view('layouts/header');
             $this->load->view('layouts/error');
             $this->load->view('layouts/footer');
-		    
-            
-        } else {	    
-	    
+
+
+        } else {
+
 	    $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']); // Menampilkan Data User
 		$data['details'] = $this->confide_models->get_details($confideid); // Menampilkan Data Confide
 		$data['count_suka'] = $this->confide_models->count_likeConfide($confideid); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
@@ -177,25 +177,25 @@ class Confide extends CI_Controller {
 		$this->load->view('layouts/footer');
         }
 	}
-	
+
     // ================================================
     			// Menambah Like pada status //
     // ================================================
-    
+
     	public function likeConfide(){
     		$this->confide_models->set_likeConfide();
     		redirect('home');
     	}
-    	
+
     // ================================================
     			// Mengurangi Like pada status //
     // ================================================
-    
+
     public function unlikeConfide(){
     	$this->confide_models->set_unlikeConfide();
     	redirect('home');
     }
-    
+
 // ================================================
 			// Menambah Comment pada status //
 // ================================================
@@ -222,13 +222,13 @@ class Confide extends CI_Controller {
 			redirect('home');
 		}
 	}
-	
+
 	// Jumlah Komentar
     public function count_comment($confideid){
         $query= $this->db->query("SELECT COUNT(id) FROM `comment_confide` WHERE confide_id = .$confideid.");
         return $query->row_array();
 	}
-	
+
     // 	Menampilkan User Online
     public function onlineuser(){
         $this->load->view('layouts/header');
@@ -237,7 +237,7 @@ class Confide extends CI_Controller {
         $this->load->view('layouts/navbar_bottom');
         $this->load->view('layouts/footer');
     }
-	
+
 	// Menampilkan chat
 	public function viewchat($username)
 	{
@@ -248,7 +248,7 @@ class Confide extends CI_Controller {
             $this->load->view('layouts/footer');
 		}else {
 		$data = array(
-			'user' => $this->user_models->get_user('id', @$_SESSION['user_id']), 
+			'user' => $this->user_models->get_user('id', @$_SESSION['user_id']),
 			'user_item' => $this->user_models->get_users($username)
 		);
 		$dataaccountid = $this->user_models->get_userid($username);
@@ -257,13 +257,13 @@ class Confide extends CI_Controller {
         $this->load->view('layouts/header');
 		$this->load->view('pages/directchat', $data);
 		$this->load->view('layouts/footer');
-		}		
+		}
 	}
 
 	// Menginput data chat kedalam table chat.
 	public function sendChat()
 	{
-		$userid = $this->input->post('send_by');	
+		$userid = $this->input->post('send_by');
 		$accountid = $this->input->post('send_to');
 
 		$data = array(
@@ -271,7 +271,7 @@ class Confide extends CI_Controller {
             'send_to' => $this->input->post('send_to'),
             'send_by' => $this->input->post('send_by')
 			);
-	
+
 			$options = array(
 				'cluster' => 'ap1',
 				'useTLS' => true
@@ -282,9 +282,9 @@ class Confide extends CI_Controller {
 				'674230',
 				$options
 			  );
-			  
+
 			if ($this->db->insert('chat', $data)) {
-	
+
 				// $push = $this->db->order_by('time','ASC');
 				// $push = $this->db->get('chat')->result();
 
@@ -296,14 +296,14 @@ class Confide extends CI_Controller {
 					->order_by('chat.time', 'ASC')
 					->get()
                     ->result();
-	  
+
 				foreach ($push as $key) {
 					$data_pusher[] = $key;
 				}
 				$pusher->trigger('my-channel', 'my-event', $data_pusher);
 			}
 		}
-		
+
 		public function UnsendChat($chatid)
     	{
             $this->user_models->unsend_chat_id($chatid);

@@ -52,7 +52,7 @@ class Confide_models extends CI_Model {
     }
 
     public function upload_confideVideo(){
-		$config['upload_path'] = '.././videos/';
+		$config['upload_path'] = '.././mobileweb/assets/videos/';
 		$config['allowed_types'] = 'avi|mp4|mpeg|webm|mkv|gif|wmv|3gp';
 		$config['max_size']	= '100000';
 		$config['overwrite'] = FALSE;

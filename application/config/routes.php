@@ -23,6 +23,12 @@ $route['delete/(:any)'] 			= 'confide/delete_confide/$1';
 
 $route['c/(:any)'] = 'confide/viewchat/$1'; // chat
 
+$route['s/video'] = 'video/view';
+$route['s/video/p'] = 'video/create';
+$route['s/video/(:any)'] = 'video/view_details/$1';
+$route['s/video/u/(:any)'] = 'video/edit/$1'; // update
+$route['s/video/d/(:any)'] = 'video/delete/$1'; // Delete
+
 $route['default_controller'] = 'auth/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
