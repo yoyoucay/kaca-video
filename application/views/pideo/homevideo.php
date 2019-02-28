@@ -51,6 +51,18 @@
                             <span class="text-secondary small text-capitalize"><?php echo $content_item['username']; ?></span><br>
                             <a href="<?= site_url('s/video/'. $content_item['id']) ?>" class="small font-weight-bold text-capitalize"><?php echo $content_item['title']; ?></a><br>
                             <span class="text-secondary small">0 views - <?php echo $content_item['created_at']; ?></span>
+                            <?php if(@$_SESSION['user_id'] == TRUE){ ?>
+                                    <?php echo form_open('video/likeVideo'); ?>
+                                    <input type="hidden" name="id_status" value="<?= $content_item['id']; ?>">
+                                    <input type="hidden" name="id_user" value="<?= $_SESSION['user_id'];?>">
+                                    <button type="submit">Hit up!</button>
+                                    <?php echo form_close(); ?>
+                                    <?php echo form_open('video/unlikeVideo'); ?>
+                                    <input type="hidden" name="id_status" value="<?= $content_item['id']; ?>">
+                                    <input type="hidden" name="id_user" value="<?= $_SESSION['user_id'];?>">
+                                    <button type="submit">Hit down!</button>
+                                    <?php echo form_close(); ?>
+                            <?php } ?>
                         </div>
                         <?php endforeach; ?>
                     </div>

@@ -139,4 +139,50 @@ public function hapus($video_id){
   	}
 
   // ======================== END COMMENT ====================================
+
+
+  // ======================= Check Like pada status ==========================
+
+  public function check_like($video_id){
+    $query = $this->db->query("SELECT user_id, video_id FROM likes_video WHERE user_id = '".@$_SESSION['user_id']."' AND video_id = ".$video_id."");
+    return $query->result_array();
+  }
+
+  // =========================================================================
+
+  // ============= Menghitung Jumlah Like  Pada Video dari User ============
+  public function count_likeConfide($video_id){
+      $query= $this->db->query("select count(video_id) AS status_like FROM likes_video WHERE video_id = ".$video_id."");
+      return $query->row_array();
+  }
+
+  // =========================================================================
+
+  // ============= Menambah Jumlah Like  Pada Video dari User. =============
+
+  public function set_likeVideo(){
+
+      $data = array(
+          'video_id' => $this->input->post('id_status'),
+          'user_id' => $this->input->post('id_user')
+      );
+
+      return $this->db->insert('likes_video', $data);
+    }
+
+  // =========================================================================
+
+  // ========== Mengurangi Jumlah Like  Pada Confide dari User. ================
+
+  public function set_unlikeVideo(){
+
+      $data = array(
+          'video_id' => $this->input->post('id_status'),
+          'user_id' => $this->input->post('id_user')
+      );
+
+      return $this->db->delete('likes_video', $data);
+    }
+
+    // =========================================================================
 }

@@ -58,6 +58,10 @@ class Video extends CI_Controller {
       $data = array(
         'content' => $this->Video_models->get(),
        );
+
+     // $data['count_suka'] = $this->Video_models->count_likeConfide($video_id); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
+     // $data['check_suka'] = $this->Video_models->check_like($video_id); // Menampilkan Data Like Sudah atau belum.
+
       $this->load->view('layouts/header');
       $this->load->view('layouts/navbar_top');
       $this->load->view('pideo/homevideo', $data);
@@ -78,8 +82,8 @@ class Video extends CI_Controller {
     	  $data['user'] = $this->user_models->get_user('id', @$_SESSION['user_id']); // Menampilkan Data User
     		$data['details'] = $this->Video_models->get_details($video_id); // Menampilkan Data Confide
         // die(var_dump($data['details']));
-    		// $data['count_suka'] = $this->confide_models->count_likeConfide($confideid); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
-    		// $data['check_suka'] = $this->confide_models->check_like($confideid); // Menampilkan Data Like Sudah atau belum.
+    		$data['count_suka'] = $this->Video_models->count_likeConfide($video_id); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
+    		$data['check_suka'] = $this->Video_models->check_like($video_id); // Menampilkan Data Like Sudah atau belum.
     		$data['comment'] = $this->Video_models->get_comment($video_id); // Menampilkan Data Comment yang terhubung dengan ID CONFIDE, ID USER.
     		$data['count_comment'] = $this->Video_models->count_comment($video_id);
 
@@ -113,4 +117,22 @@ class Video extends CI_Controller {
         }
       }
       // End Insert Comment
+
+      // LIKE
+
+            // Menambah Like pada video //
+
+      public function likeVideo(){
+          $this->Video_models->set_likeVideo();
+          redirect('/s/video');
+        }
+
+            // Mengurangi Like pada video //
+
+      public function unlikeVideo(){
+        $this->Video_models->set_unlikeVideo();
+        redirect('/s/video');
+      }
+
+      // End Like
 }

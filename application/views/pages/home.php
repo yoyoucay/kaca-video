@@ -62,9 +62,16 @@
                     }
                     ?>
                     <p class="card-text"><?php echo $content_item['deskripsi']; ?></p>
-                    <button type="button" class="btn btn-secondary d-inline-flex justify-content-center align-content-between">
-                        <i class="material-icons mr-1">thumb_up</i> <span>1000</span>
-                    </button>
+                      <?php echo form_open('confide/likeConfide'); ?>
+                      <input type="text" name="id_status" value="<?= $content_item['id']; ?>">
+                      <input type="text" name="id_user" value="<?= $_SESSION['user_id'];?>">
+                      <button type="submit">Hit up!</button>
+                      <?php echo form_close(); ?>
+                      <?php echo form_open('confide/unlikeConfide'); ?>
+                      <input type="hidden" name="id_status" value="<?= $content_item['id']; ?>">
+                      <input type="hidden" name="id_user" value="<?= $_SESSION['user_id'];?>">
+                      <button type="submit">Hit down!</button>
+                      <?php echo form_close(); ?>
                     <a href="<?php echo site_url('details/'.$content_item['id']) ?>#kolom-komentar" class="btn btn-secondary d-inline-flex justify-content-center align-content-between">
                         <i class="material-icons mr-1">mode_comment</i> <span>2000</span>
                     </a>

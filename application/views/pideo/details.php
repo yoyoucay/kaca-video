@@ -11,6 +11,31 @@
                 <span class="mr-3">Views 0</span>
                 <span class="mr-3"><?php echo date("j F Y", strtotime($details['created_at'])); ?></span>
                 <span class="mr-3">Shared 0</span>
+                <?php if(@$_SESSION['user_id'] == TRUE){ ?>
+                    <?php if($check_suka == FALSE){ ?>
+                        <?php echo form_open('video/likeVideo'); ?>
+                        <input type="hidden" name="id_status" value="<?= $details['id']; ?>">
+                        <input type="hidden" name="id_user" value="<?= $user['id'];?>">
+                        <button type="submit">Hit up!</button>
+                        <?php echo form_close(); ?>
+                        <?php if ($count_suka['status_like'] == 0) {
+                            echo "";
+                        }else{
+                            echo $count_suka['status_like'];
+                        }?>
+                    <?php }else{ ?>
+                        <?php echo form_open('video/unlikeVideo'); ?>
+                        <input type="hidden" name="id_status" value="<?= $details['id']; ?>">
+                        <input type="hidden" name="id_user" value="<?= $user['id'];?>">
+                        <button type="submit">Hit down!</button>
+                        <?php echo form_close(); ?>
+                        <?php if ($count_suka['status_like'] == 0) {
+                            echo "";
+                        }else{
+                            echo $count_suka['status_like'];
+                        }?>
+                    <?php } ?>
+                <?php } ?>
             </div>
             <p><?php echo $details['description']; ?></p>
             <div class="media">
