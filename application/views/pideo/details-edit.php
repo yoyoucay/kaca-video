@@ -68,10 +68,16 @@
                         <?= $comment_item['full_name']; ?>
                         <span class="small"><?php echo date("j F Y", strtotime($comment_item['created_at'])); ?></span>
                         <?php if ($comment_item['user_id'] == @$_SESSION['user_id']): ?>
-                          <span> <a href="http://localhost/kaca3/mobileweb/s/video/u/<?php echo $details['id']."/".$comment_item['id']; ?>">EDIT</a> | <a href="http://localhost/kaca3/mobileweb/s/video/d/<?php echo $details['id']."/".$comment_item['id']; ?>">DELETE</a></span>
+                          <?php echo form_open('video/edit_comment/'.$details['id'].'/'.$comment_item['id'], 'class="my-5"'); ?>
+                              <input type="hidden" name="video_id" value="<?= $details['id'];?>">
+                              <input type="hidden" name="user_id" value="<?= $user['id'];?>">
+                              <div class="form-group">
+                                  <textarea name="comment_txt" class="form-control" id="exampleTextarea" rows="3"><?php echo $comment_item['deskripsi']; ?></textarea>
+                              </div>
+                              <input type="submit" class="btn btn-primary btn-raised btn-block" value="Komen sekarang">
+                          <?php echo form_close(); ?>
                         <?php endif; ?>
                     </h6>
-                    <?= $comment_item['deskripsi'];?>
                 </div>
             </div>
             <?php } ?>

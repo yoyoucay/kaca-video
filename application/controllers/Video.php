@@ -95,6 +95,7 @@ class Video extends CI_Controller {
             // }
     	}
 
+// ==================== COMMENT ===============================================
       // Insert comment
       public function insert_comment()
       {
@@ -118,7 +119,36 @@ class Video extends CI_Controller {
       }
       // End Insert Comment
 
-      // LIKE
+      public function edit_comment($video_id, $comment_id)
+      {
+        // Mengambil attribute data yang diperlukan ke page
+        $data['user'] = $this->user_models->get_user('id', @$_SESSION['user_id']); // Menampilkan Data User
+        $data['details'] = $this->Video_models->get_details($video_id); // Menampilkan Data Confide
+        $data['count_suka'] = $this->Video_models->count_likeConfide($video_id); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
+        $data['check_suka'] = $this->Video_models->check_like($video_id); // Menampilkan Data Like Sudah atau belum.
+        $data['comment'] = $this->Video_models->get_comment($video_id); // Menampilkan Data Comment yang terhubung dengan ID CONFIDE, ID USER.
+        $data['count_comment'] = $this->Video_models->count_comment($video_id);
+
+          if (!empty($_POST)){
+            $this->Video_models->ubah_Comment($video_id, $comment_id);
+            redirect("/s/video/".$video_id);
+          }else {
+            $this->load->view('layouts/header');
+            $this->load->view('layouts/navbar_top');
+            $this->load->view('pideo/details-edit', $data);
+            $this->load->view('layouts/navbar_bottom');
+            $this->load->view('layouts/footer');
+          }
+      }
+
+      public function delete_comment($video_id, $comment_id)
+      {
+        $this->Video_models->hapus_comment($comment_id);
+        redirect('/s/video/'.$video_id);
+      }
+// ============================================================================
+
+// ======================== LIKE ==============================================
 
             // Menambah Like pada video //
 

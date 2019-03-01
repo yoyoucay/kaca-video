@@ -26,8 +26,12 @@ $route['c/(:any)'] = 'confide/viewchat/$1'; // chat
 $route['s/video'] = 'video/view';
 $route['s/video/p'] = 'video/create';
 $route['s/video/(:any)'] = 'video/view_details/$1';
-$route['s/video/u/(:any)'] = 'video/edit/$1'; // update
+$route['s/video/u/(:any)'] = 'video/edit/$1'; // update Video post
 $route['s/video/d/(:any)'] = 'video/delete/$1'; // Delete
+
+// Comment
+$route['s/video/u/(:any)/(:any)'] = 'video/edit_comment/$1/$2'; // update Comment
+$route['s/video/d/(:any)/(:any)'] = 'video/delete_comment/$1/$2'; // update Comment
 
 $route['default_controller'] = 'auth/login';
 $route['404_override'] = '';

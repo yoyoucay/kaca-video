@@ -75,7 +75,6 @@ class Video_models extends CI_Model {
 
 public function ubah($video_id)
 {
-
     $data = array(
         'title' => $this->input->post('judul'),
         'description' => $this->input->post('deskripsi')
@@ -113,6 +112,7 @@ public function hapus($video_id){
   			"SELECT
   			comment_video.id,
   			comment_video.video_id,
+        users.id AS user_id,
   			users.full_name,
   			comment_video.deskripsi,
   			comment_video.created_at
@@ -138,6 +138,21 @@ public function hapus($video_id){
   			return $this->db->insert('comment_video', $data);
   	}
 
+  public function ubah_Comment($video_id, $comment_id)
+  	{
+  			$data = array(
+  				'deskripsi' => $this->input->post('comment_txt'),
+  				'user_id' => $this->input->post('user_id'),
+  				'video_id' => $video_id,
+  			);
+
+        $this->db->where('id', $comment_id);
+        $this->db->update('comment_video', $data);
+  	}
+
+    public function hapus_comment($comment_id){
+      $this->db->delete('comment_video', array('id' => $comment_id));
+    }
   // ======================== END COMMENT ====================================
 
 
