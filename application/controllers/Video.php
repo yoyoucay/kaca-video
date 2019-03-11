@@ -122,13 +122,16 @@ class Video extends CI_Controller {
       public function edit_comment($video_id, $comment_id)
       {
         // Mengambil attribute data yang diperlukan ke page
-        $data['user'] = $this->user_models->get_user('id', @$_SESSION['user_id']); // Menampilkan Data User
-        $data['details'] = $this->Video_models->get_details($video_id); // Menampilkan Data Confide
-        $data['count_suka'] = $this->Video_models->count_likeConfide($video_id); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
-        $data['check_suka'] = $this->Video_models->check_like($video_id); // Menampilkan Data Like Sudah atau belum.
-        $data['comment'] = $this->Video_models->get_comment($video_id); // Menampilkan Data Comment yang terhubung dengan ID CONFIDE, ID USER.
-        $data['count_comment'] = $this->Video_models->count_comment($video_id);
-
+        $data = array(
+        'user' => $this->user_models->get_user('id', @$_SESSION['user_id']),
+        'details' => $this->Video_models->get_details($video_id),
+        'count_suka' => $this->Video_models->count_likeConfide($video_id),
+        'check_suka' =>  $this->Video_models->check_like($video_id),
+        'comment' => $this->Video_models->get_comment($video_id),
+        'count_comment' => $this->Video_models->count_comment($video_id),
+        'id_comment' => $comment_id
+         );
+         
           if (!empty($_POST)){
             $this->Video_models->ubah_Comment($video_id, $comment_id);
             redirect("/s/video/".$video_id);
