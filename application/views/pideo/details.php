@@ -8,7 +8,7 @@
             </div>
             <h5 class="mb-2 mt-3 font-weight-bold"><?= $details['title'] ?></h5><a href="http://localhost/kaca3/mobileweb/s/video/u/<?php echo $details['id']; ?>">Update</a> - <a href="http://localhost/kaca3/mobileweb/s/video/d/<?php echo $details['id']; ?>">Delete</a>
             <div class="small text-secondary mb-3">
-                <span class="mr-3">Views 0</span>
+                <span class="mr-3">Views <?php echo $details['views'] ?></span>
                 <span class="mr-3"><?php echo date("j F Y", strtotime($details['created_at'])); ?></span>
                 <span class="mr-3">Shared 0</span>
                 <?php if(@$_SESSION['user_id'] == TRUE){ ?>

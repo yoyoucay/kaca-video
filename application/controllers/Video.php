@@ -70,15 +70,7 @@ class Video extends CI_Controller {
 
     public function view_details($video_id)
     {
-    	    // $query = $this->confide_models->get_details($confideid);
-          //   if (!$query) {
-    			// 			$this->load->view('layouts/header');
-          //       $this->load->view('layouts/error');
-          //       $this->load->view('layouts/footer');
-          //
-          //
-          //   } else {
-
+        $this->Video_models->addViewers($video_id);
     	  $data['user'] = $this->user_models->get_user('id', @$_SESSION['user_id']); // Menampilkan Data User
     		$data['details'] = $this->Video_models->get_details($video_id); // Menampilkan Data Confide
         // die(var_dump($data['details']));
@@ -92,7 +84,7 @@ class Video extends CI_Controller {
     		$this->load->view('pideo/details', $data);
     		$this->load->view('layouts/navbar_bottom');
     		$this->load->view('layouts/footer');
-            // }
+
     	}
 
 // ==================== COMMENT ===============================================
@@ -131,7 +123,7 @@ class Video extends CI_Controller {
         'count_comment' => $this->Video_models->count_comment($video_id),
         'id_comment' => $comment_id
          );
-         
+
           if (!empty($_POST)){
             $this->Video_models->ubah_Comment($video_id, $comment_id);
             redirect("/s/video/".$video_id);
