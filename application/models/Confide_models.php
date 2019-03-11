@@ -161,6 +161,8 @@ class Confide_models extends CI_Model {
 			'username'=>$this->input->post('username'),
 			'full_name'=>$this->input->post('fullname'),
 			'biodata'=>$this->input->post('biodata'),
+			'pendidikan'=>$this->input->post('education'),
+			'pekerjaan'=>$this->input->post('job'),
 			'lokasi_user'=>$this->input->post('user_lokasi'),
 			'nama_avatar' => $upload['file']['file_name'],
 			'ukuran_avatar' => $upload['file']['file_size'],
@@ -178,6 +180,8 @@ class Confide_models extends CI_Model {
 			'username'=>$this->input->post('username'),
 			'full_name'=>$this->input->post('fullname'),
 			'biodata'=>$this->input->post('biodata'),
+			'pendidikan'=>$this->input->post('education'),
+			'pekerjaan'=>$this->input->post('job'),
 			'lokasi_user'=>$this->input->post('user_lokasi'),
 		);
 		// die(var_dump($data));

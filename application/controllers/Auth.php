@@ -397,12 +397,14 @@ class Auth extends CI_Controller {
 
    public function set_settings(){
         $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-		$data = array();
+		    $data = array();
         $upload = $this->confide_models->avatarProfile();
 
         $this->form_validation->set_rules('username', 'Username', 'required|alpha|trim');
         $this->form_validation->set_rules('fullname', 'Fullname', 'required|callback_checkHurufSpasi');
         $this->form_validation->set_rules('biodata', 'Biodata', 'max_length[120]');
+        $this->form_validation->set_rules('job', 'Job', 'max_length[80]');
+        $this->form_validation->set_rules('education', 'Education', 'max_length[80]');
         $this->form_validation->set_rules('user_lokasi', 'Lokasi', 'max_length[60]|callback_checkHurufKoma');
 
         if($this->form_validation->run() === false)

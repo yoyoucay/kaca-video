@@ -46,6 +46,16 @@
                         <?= form_error('user_lokasi'); ?>
                     </div>
                     <div class="form-group">
+                        <label for="education">Pendidikan</label>
+                        <input type="text" name="education" value="<?php echo $user['pendidikan']; ?>" class="form-control" id="city" placeholder="Pendidikan kamu sekarang?">
+                        <?= form_error('education'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="job">Pekerjaan</label>
+                        <input type="text" name="job" value="<?php echo $user['pekerjaan']; ?>" class="form-control" id="city" placeholder="Pekerjaan anda sekarang?">
+                        <?= form_error('job'); ?>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleTextarea" class="bmd-label-floating">Bio</label>
                         <textarea class="form-control" id="exampleTextarea" rows="3" name="biodata"><?php echo $user['biodata']; ?></textarea>
                         <?= form_error('biodata'); ?>
