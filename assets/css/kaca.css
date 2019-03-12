@@ -1,0 +1,11 @@
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #10455b;
+}
+
+a {
+    color: #10455b;
+    text-decoration: none;
+    background-color: transparent;
+}

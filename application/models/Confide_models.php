@@ -17,7 +17,7 @@ class Confide_models extends CI_Model {
 		}
 
     public function upload_confidePhoto(){
-		$config['upload_path'] = '.././images/';
+		$config['upload_path'] = './assets/images/';
 		$config['allowed_types'] = 'jpg|png|jpeg';
 		$config['max_size']	= '8192';
 		$config['remove_space'] = TRUE;
@@ -52,7 +52,7 @@ class Confide_models extends CI_Model {
     }
 
     public function upload_confideVideo(){
-		$config['upload_path'] = '.././mobileweb/assets/videos/';
+		$config['upload_path'] = './assets/videos/';
 		$config['allowed_types'] = 'avi|mp4|mpeg|webm|mkv|gif|wmv|3gp';
 		$config['max_size']	= '100000';
 		$config['overwrite'] = FALSE;
@@ -83,7 +83,6 @@ class Confide_models extends CI_Model {
 
 		$data = array(
 
-      		'judul'=>$this->input->post('judul'),
 			'deskripsi'=>$this->input->post('input_deskripsi'),
 			'nama_file' => $upload['file']['file_name'],
 			'ukuran_file' => $upload['file']['file_size'],
@@ -104,7 +103,6 @@ class Confide_models extends CI_Model {
 			users.nama_avatar,
 			confide.id,
 			confide.user_id,
-			confide.judul,
 			confide.nama_file,
 			confide.tipe_file,
 			confide.created_at,
@@ -125,7 +123,6 @@ class Confide_models extends CI_Model {
 			users.biodata,
 			confide.id,
 			confide.user_id,
-			confide.judul,
 			confide.nama_file,
 			confide.tipe_file,
 			confide.deskripsi,
@@ -161,8 +158,6 @@ class Confide_models extends CI_Model {
 			'username'=>$this->input->post('username'),
 			'full_name'=>$this->input->post('fullname'),
 			'biodata'=>$this->input->post('biodata'),
-			'pendidikan'=>$this->input->post('education'),
-			'pekerjaan'=>$this->input->post('job'),
 			'lokasi_user'=>$this->input->post('user_lokasi'),
 			'nama_avatar' => $upload['file']['file_name'],
 			'ukuran_avatar' => $upload['file']['file_size'],
@@ -180,8 +175,6 @@ class Confide_models extends CI_Model {
 			'username'=>$this->input->post('username'),
 			'full_name'=>$this->input->post('fullname'),
 			'biodata'=>$this->input->post('biodata'),
-			'pendidikan'=>$this->input->post('education'),
-			'pekerjaan'=>$this->input->post('job'),
 			'lokasi_user'=>$this->input->post('user_lokasi'),
 		);
 		// die(var_dump($data));
@@ -289,7 +282,6 @@ public function set_confideVideoUpdate($confideid){
     		users.nama_avatar,
     		confide.id,
     		confide.user_id,
-    		confide.judul,
     		confide.nama_file,
     		confide.tipe_file,
     		confide.created_at,
@@ -372,6 +364,7 @@ public function set_confideVideoUpdate($confideid){
 			comment_confide.id,
 			comment_confide.confide_id,
 			users.full_name,
+			users.nama_avatar,
 			comment_confide.deskripsi,
 			comment_confide.created_at
 			FROM comment_confide INNER JOIN users ON users.id = comment_confide.user_id

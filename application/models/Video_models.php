@@ -54,7 +54,8 @@ class Video_models extends CI_Model {
 
   public function get()
   {
-    $this->db->select('users.full_name,
+    $this->db->select('
+    users.full_name,
     users.username,
     users.nama_avatar,
     video.id,
@@ -99,8 +100,7 @@ public function hapus($video_id){
     video.nama_file,
     video.tipe_file,
     video.created_at,
-    video.description,
-    video.views');
+    video.description');
     $this->db->from('video');
     $this->db->join('users', 'users.id = video.user_id')->where('video.id', $video_id);
     $str = $this->db->last_query();
@@ -201,27 +201,4 @@ public function hapus($video_id){
     }
 
     // =========================================================================
-
-  // ============================= Views Pada video ============================
-  // public function seeViewers($video_id)
-  // {
-  //            $this->db->select('views');
-  //            $this->db->from('video');
-  //            $this->db->where('id', $video_id);
-  //            $query = $this->db->get();
-  //
-  //     return $query->row_array();
-  // }
-
-
-  public function addViewers($video_id)
-  {
-
-    $this->db->set('views', 'views+1', FALSE);
-    $this->db->where('id', $video_id);
-    $this->db->update('video');
-
-  }
-
-
 }

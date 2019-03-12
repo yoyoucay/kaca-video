@@ -249,7 +249,7 @@ class Auth extends CI_Controller {
     public function login()
     {
     if($this->user_models->is_LoggedIn()){
-            redirect('home');
+            redirect('confide');
         }
 
         $this->form_validation->set_rules('email', 'Email', 'required|callback_checkEmail');
@@ -268,7 +268,7 @@ class Auth extends CI_Controller {
                 $data['token'] = $checkrole_user['token'];
                 $data['email'] = $this->input->post('email');
                 $this->load->view('layouts/header');
-                $this->load->view('pages/activation', $data);
+                $this->load->view('auth/activation', $data);
                 $this->load->view('layouts/footer');
 
         } elseif ($check_user['hak'] == 1) {
@@ -283,12 +283,15 @@ class Auth extends CI_Controller {
 
             // set session
             $_SESSION['user_id'] = $user['id'];
+            $_SESSION['photo'] = $user['nama_avatar'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['logged_in'] = true;
 
 
 
             // redirect
-            redirect('home');
+            redirect('confide');
         }
     }
 
@@ -397,14 +400,12 @@ class Auth extends CI_Controller {
 
    public function set_settings(){
         $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-		    $data = array();
+		$data = array();
         $upload = $this->confide_models->avatarProfile();
 
         $this->form_validation->set_rules('username', 'Username', 'required|alpha|trim');
         $this->form_validation->set_rules('fullname', 'Fullname', 'required|callback_checkHurufSpasi');
         $this->form_validation->set_rules('biodata', 'Biodata', 'max_length[120]');
-        $this->form_validation->set_rules('job', 'Job', 'max_length[80]');
-        $this->form_validation->set_rules('education', 'Education', 'max_length[80]');
         $this->form_validation->set_rules('user_lokasi', 'Lokasi', 'max_length[60]|callback_checkHurufKoma');
 
         if($this->form_validation->run() === false)

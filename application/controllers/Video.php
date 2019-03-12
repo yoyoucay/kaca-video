@@ -10,6 +10,22 @@ class Video extends CI_Controller {
         $this->load->model('user_models');
     }
 
+    public function index()
+    {
+      $data = array(
+        'content' => $this->Video_models->get(),
+       );
+
+     // $data['count_suka'] = $this->Video_models->count_likeConfide($video_id); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
+     // $data['check_suka'] = $this->Video_models->check_like($video_id); // Menampilkan Data Like Sudah atau belum.
+
+      $this->load->view('layouts/header');
+      $this->load->view('layouts/navbar-tv');
+      $this->load->view('tv/index', $data);
+      $this->load->view('layouts/navbar-end');
+      $this->load->view('layouts/footer');
+    }
+
     public function create()
     {
       if (!empty($_POST)){
@@ -30,7 +46,7 @@ class Video extends CI_Controller {
       } else {
         $this->load->view('layouts/header');
         $this->load->view('layouts/navbar_top');
-        $this->load->view('pideo/createvideo');
+        $this->load->view('tv/createvideo');
         $this->load->view('layouts/footer');
       }
     }
@@ -43,7 +59,7 @@ class Video extends CI_Controller {
           $this->Video_models->ubah($video_id);
           redirect("/s/video/".$video_id);
         }else {
-          $this->load->view('pideo/updatevideo', $data);
+          $this->load->view('video/updatevideo', $data);
         }
     }
 
@@ -53,24 +69,17 @@ class Video extends CI_Controller {
       redirect('/s/video');
     }
 
-    public function view()
+    public function p($video_id)
     {
-      $data = array(
-        'content' => $this->Video_models->get(),
-       );
+    	    // $query = $this->confide_models->get_details($confideid);
+          //   if (!$query) {
+    			// 			$this->load->view('layouts/header');
+          //       $this->load->view('layouts/error');
+          //       $this->load->view('layouts/footer');
+          //
+          //
+          //   } else {
 
-     // $data['count_suka'] = $this->Video_models->count_likeConfide($video_id); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
-     // $data['check_suka'] = $this->Video_models->check_like($video_id); // Menampilkan Data Like Sudah atau belum.
-
-      $this->load->view('layouts/header');
-      $this->load->view('layouts/navbar_top');
-      $this->load->view('pideo/homevideo', $data);
-      $this->load->view('layouts/footer');
-    }
-
-    public function view_details($video_id)
-    {
-        $this->Video_models->addViewers($video_id);
     	  $data['user'] = $this->user_models->get_user('id', @$_SESSION['user_id']); // Menampilkan Data User
     		$data['details'] = $this->Video_models->get_details($video_id); // Menampilkan Data Confide
         // die(var_dump($data['details']));
@@ -80,11 +89,11 @@ class Video extends CI_Controller {
     		$data['count_comment'] = $this->Video_models->count_comment($video_id);
 
     	  $this->load->view('layouts/header');
-    	  $this->load->view('layouts/navbar_top');
-    		$this->load->view('pideo/details', $data);
-    		$this->load->view('layouts/navbar_bottom');
+    	  $this->load->view('layouts/navbar-tv');
+    		$this->load->view('tv/post', $data);
+    		$this->load->view('layouts/navbar-end');
     		$this->load->view('layouts/footer');
-
+            // }
     	}
 
 // ==================== COMMENT ===============================================
@@ -106,7 +115,7 @@ class Video extends CI_Controller {
           $video_id = $this->input->post('video_id');
           $userid = $this->input->post('user_id');
           $this->Video_models->set_Comment($video_id, $userid);
-          redirect('home');
+          redirect('video/p/'.$video_id);
         }
       }
       // End Insert Comment
@@ -123,14 +132,14 @@ class Video extends CI_Controller {
         'count_comment' => $this->Video_models->count_comment($video_id),
         'id_comment' => $comment_id
          );
-
+         
           if (!empty($_POST)){
             $this->Video_models->ubah_Comment($video_id, $comment_id);
             redirect("/s/video/".$video_id);
           }else {
             $this->load->view('layouts/header');
             $this->load->view('layouts/navbar_top');
-            $this->load->view('pideo/details-edit', $data);
+            $this->load->view('tv/details-edit', $data);
             $this->load->view('layouts/navbar_bottom');
             $this->load->view('layouts/footer');
           }
@@ -139,7 +148,7 @@ class Video extends CI_Controller {
       public function delete_comment($video_id, $comment_id)
       {
         $this->Video_models->hapus_comment($comment_id);
-        redirect('/s/video/'.$video_id);
+        redirect('video/p/'.$video_id);
       }
 // ============================================================================
 

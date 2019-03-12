@@ -10,28 +10,28 @@ class User extends CI_Controller {
 		$this->load->model('confide_models');
 	}
 
-	public function view($pages = NULL)
-	{
+	// public function view($pages = NULL)
+	// {
 
-		if($pages == "user"){
-			show_404();
-		}else if(!file_exists(APPPATH."views/pages/".$pages.".php")){
-		    show_404();
-		}
+	// 	if($pages == "user"){
+	// 		show_404();
+	// 	}else if(!file_exists(APPPATH."views/pages/".$pages.".php")){
+	// 	    show_404();
+	// 	}
 
-		if (!$this->user_models->is_LoggedIn()) {
-			redirect('login');
-		}
-		$data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-		$data['content'] = $this->confide_models->get_content();
-		$data['online'] = $this->user_models->get_online();
-		$this->load->view('layouts/header');
-		$this->load->view('layouts/navbar_top');
-		$this->load->view('pages/'.$pages, $data);
-		$this->load->view('layouts/navbar_bottom');
-		$this->load->view('layouts/footer');
+	// 	if (!$this->user_models->is_LoggedIn()) {
+	// 		redirect('login');
+	// 	}
+	// 	$data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
+	// 	$data['content'] = $this->confide_models->get_content();
+	// 	$data['online'] = $this->user_models->get_online();
+	// 	$this->load->view('layouts/header');
+	// 	$this->load->view('layouts/navbar_top');
+	// 	$this->load->view('pages/'.$pages, $data);
+	// 	$this->load->view('layouts/navbar_bottom');
+	// 	$this->load->view('layouts/footer');
 
-	}
+	// }
 
 	public function views($username = NULL)
 	{
@@ -54,9 +54,7 @@ class User extends CI_Controller {
 
 		$data['kiriman'] = $this->user_models->jumlah_kiriman($username);
         $this->load->view('layouts/header');
-        $this->load->view('layouts/navbar_top');
-		$this->load->view('pages/user',$data);
-		$this->load->view('layouts/navbar_bottom');
+		$this->load->view('user/index',$data);
 		$this->load->view('layouts/footer');
 		}
 	}

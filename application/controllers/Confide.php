@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require '.././vendor/autoload.php';
 class Confide extends CI_Controller {
 
 	public function __construct(){
@@ -7,6 +6,22 @@ class Confide extends CI_Controller {
 
 		$this->load->model('confide_models');
 		$this->load->model('user_models');
+	}
+
+	public function index()
+	{
+
+		if (!$this->user_models->is_LoggedIn()) {
+			redirect('login');
+		}
+		$data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
+		$data['content'] = $this->confide_models->get_content();
+		$this->load->view('layouts/header');
+		$this->load->view('layouts/navbar-confide');
+		$this->load->view('confide/index', $data);
+		$this->load->view('layouts/navbar-end');
+		$this->load->view('layouts/footer');
+
 	}
 
 	public function tambah_confide(){
@@ -22,7 +37,7 @@ class Confide extends CI_Controller {
 				 // Panggil function save yang ada di GambarModel.php untuk menyimpan data ke database
 				$this->confide_models->save_confidePhoto($upload);
 
-				redirect('home'); // Redirect kembali ke halaman awal / halaman view data
+				// redirect('home'); // Redirect kembali ke halaman awal / halaman view data
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 				die($data['message']);
@@ -38,7 +53,7 @@ class Confide extends CI_Controller {
 				 // Panggil function save yang ada di GambarModel.php untuk menyimpan data ke database
 				$this->confide_models->save_confideVideo($upload);
 
-				redirect('home'); // Redirect kembali ke halaman awal / halaman view data
+				// redirect('home'); // Redirect kembali ke halaman awal / halaman view data
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 				die($data['message']);
@@ -96,7 +111,7 @@ class Confide extends CI_Controller {
 
 			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
 			$this->load->view('layouts/header');
-			$this->load->view('updateconfide/editConfidePhoto', $data);
+			$this->load->view('confide/update/editConfidePhoto', $data);
 			$this->load->view('layouts/footer');
 		} else {
 
@@ -132,7 +147,7 @@ class Confide extends CI_Controller {
 
 			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
 			$this->load->view('layouts/header');
-			$this->load->view('updateconfide/editConfideVideo', $data);
+			$this->load->view('confide/update/editConfideVideo', $data);
 			$this->load->view('layouts/footer');
 		} else {
 
@@ -145,14 +160,14 @@ class Confide extends CI_Controller {
 	// F{ungsi untuk Menghapus semua jenis status //
 // ================================================
 
-	public function delete_confide($confideid)
+	public function delete($confideid)
 	{
 		$this->confide_models->delete_confideUpdate($confideid);
 
-		redirect('home');
+		redirect('confide');
 	}
 
-	public function view_post($confideid){
+	public function p($confideid){
 
 	    $query = $this->confide_models->get_details($confideid);
         if (!$query) {
@@ -171,9 +186,9 @@ class Confide extends CI_Controller {
 		$data['count_comment'] = $this->confide_models->count_comment($confideid);
 
 	    $this->load->view('layouts/header');
-	    $this->load->view('layouts/navbar_top');
-		$this->load->view('pages/details', $data);
-		$this->load->view('layouts/navbar_bottom');
+	    $this->load->view('layouts/navbar-confide');
+		$this->load->view('confide/post', $data);
+		$this->load->view('layouts/navbar-end');
 		$this->load->view('layouts/footer');
         }
 	}
