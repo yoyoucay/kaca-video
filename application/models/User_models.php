@@ -22,14 +22,20 @@ class user_models extends CI_Model
                 'hak' => 0
 
         ];
-//zz
         $this->db->insert('users', $data);
     }
 
-    public function lupa_password($userid, $password)
+    public function c_password($userid, $password)
     {
         $data = array('password' => password_hash($password, PASSWORD_DEFAULT));
-        $this->db->where('id', $userid); // mencari berdasarkan Email
+        $this->db->where('id', $userid); // mencari berdasarkan ID
+        return $this->db->update('users', $data); // mengupdate kolom role dari array $data;
+    }
+
+    public function forgot_password($email, $password)
+    {
+        $data = array('password' => password_hash($password, PASSWORD_DEFAULT));
+        $this->db->where('email', $email); // mencari berdasarkan ID
         return $this->db->update('users', $data); // mengupdate kolom role dari array $data;
     }
 
@@ -86,6 +92,16 @@ class user_models extends CI_Model
     public function checkPassword($email, $password)
     {
         $hash = $this->get_user('email', $email)['password'];
+            if (password_verify($password, $hash)) {
+                return true;
+            }
+
+        return false;
+    }
+
+    public function checkPassword2($userid, $password)
+    {
+        $hash = $this->get_user('id', $userid)['password'];
             if (password_verify($password, $hash)) {
                 return true;
             }
