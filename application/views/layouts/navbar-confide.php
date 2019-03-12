@@ -43,7 +43,7 @@
                     <li class="nav-item dropdown mr-3">
                         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            <?php if($_SESSION['photo'] == 0){?>
+                            <?php if($_SESSION['photo'] == FALSE){?>
                             <img class="rounded" src="<?php echo base_url('assets/img/user.png') ?>" alt="" style="width:30px;">
                             <?php }else{ ?>
                             <img class="rounded" src="<?php echo base_url('assets/images/avatar/'.$_SESSION['photo']) ?>" alt="" style="width:30px;">

@@ -19,18 +19,17 @@
                 event.preventDefault();
                 $(this).ajaxSubmit({
                     beforeSubmit:function(){
-                        $('.progress-bar').width('0%');
+                        $('.progress-bar1').width('0%');
                     },
                     uploadProgress: function(event, position, total, percentageComplete)
                     {
-                        $('.progress-bar').animate({
+                        $('.progress-bar1').animate({
                             width: percentageComplete + '%'
                         }, {
-                            duration: 3000
+                            duration: 1000
                         });
                     },
                     success:function(){
-                        // window.location = "localhost/kaca3/confide"
                         location.reload();
                     },
                     resetForm: true
@@ -40,7 +39,7 @@
         });
     });
 
-    // Progress Upload Video
+    // Progress Upload Video 
     $(document).ready(function(){
         $('#uploadVideo').submit(function(event){
             if($('#uploadFile2').val())
@@ -48,18 +47,17 @@
                 event.preventDefault();
                 $(this).ajaxSubmit({
                     beforeSubmit:function(){
-                        $('.progress-bar').width('0%');
+                        $('.progress-bar2').width('0%');
                     },
                     uploadProgress: function(event, position, total, percentageComplete)
                     {
-                        $('.progress-bar').animate({
+                        $('.progress-bar2').animate({
                             width: percentageComplete + '%'
                         }, {
-                            duration: 3000
+                            duration: 1000
                         });
                     },
                     success:function(){
-                        // window.location = "localhost/kaca3/confide"
                         location.reload();
                     },
                     resetForm: true

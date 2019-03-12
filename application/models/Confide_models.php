@@ -134,7 +134,7 @@ class Confide_models extends CI_Model {
     }
 
     public function avatarProfile(){
-		$config['upload_path'] = '.././images/avatar/';
+		$config['upload_path'] = './assets/images/avatar';
 		$config['allowed_types'] = 'jpg|png|jpeg';
 		$config['max_size']	= '2048';
 		$config['remove_space'] = TRUE;
@@ -152,19 +152,13 @@ class Confide_models extends CI_Model {
 	}
 
 	// Setting Profile memakai attribute foto
-	public function set_settingsProfile($upload){
+	public function set_Ava($upload){
 		$data = array(
-			'email'=>$this->input->post('email'),
-			'username'=>$this->input->post('username'),
-			'full_name'=>$this->input->post('fullname'),
-			'biodata'=>$this->input->post('biodata'),
-			'lokasi_user'=>$this->input->post('user_lokasi'),
 			'nama_avatar' => $upload['file']['file_name'],
 			'ukuran_avatar' => $upload['file']['file_size'],
 			'tipe_avatar' => $upload['file']['file_type']
-
 		);
-		$this->db->where('id', $this->input->post('id'));
+		$this->db->where('id', $_SESSION['user_id']);
 		$this->db->update('users', $data);
     }
 
@@ -176,6 +170,8 @@ class Confide_models extends CI_Model {
 			'full_name'=>$this->input->post('fullname'),
 			'biodata'=>$this->input->post('biodata'),
 			'lokasi_user'=>$this->input->post('user_lokasi'),
+			'last_education'=>$this->input->post('last_education'),
+			'work'=>$this->input->post('work'),
 		);
 		// die(var_dump($data));
 		$this->db->where('id', $this->input->post('id'));
@@ -183,19 +179,18 @@ class Confide_models extends CI_Model {
     }
 
   // MENGAMBIL data CONFIDE
-   public function get_confideUpdate($username,$confideid){
+   public function get_confideUpdate($user_id,$confideid){
 		$query = $this->db->query(
 			"SELECT
 			users.username,
 			confide.id,
 			confide.user_id,
-			confide.judul,
 			confide.nama_file,
 			confide.tipe_file,
 			confide.deskripsi,
 			confide.created_at
 			FROM users INNER JOIN confide ON users.id = confide.user_id WHERE
-			users.username='".$username."' AND confide.id = '".$confideid."'"
+			confide.user_id='".$user_id."' AND confide.id = '".$confideid."'"
 		);
         return $query->row_array();
 	}

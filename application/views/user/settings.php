@@ -1,29 +1,29 @@
 <div class="container my-5">
-    <div class="card px-5 py-5">
+    <div class="card px-5 py-5 border-0 shadow rounded-lg">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-4 d-none d-xl-block">
                 <ul class="list-group">
                     <a href="<?php site_url('change') ?>" class="list-group-item active">
-                        <i class="material-icons">account_circle</i>
+                        <i class="fas fa-user-edit mr-2" style="width:24px;"></i>
                         Edit Profile
                     </a>
                     <a href="#" class="list-group-item">
-                        <i class="material-icons">lock</i>
+                        <i class="fas fa-lock mr-2" style="width:24px;"></i>
                         Change Password
                     </a>
                     <a href="<?php echo site_url('logout') ?>" class="list-group-item">
-                        <i class="material-icons">power_settings_new</i>
+                        <i class="fas fa-sign-out-alt mr-2" style="width:24px;"></i>
                         Log out
                     </a>
-                    <a href="<?php echo site_url('home') ?>" class="list-group-item">
-                        <i class="material-icons">cancel</i>
+                    <a href="<?php echo site_url('user/') ?>" class="list-group-item">
+                        <i class="fas fa-sign-out-alt mr-2" style="width:24px;"></i>
                         Cancel
                     </a>
                 </ul>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-8">
-                <h5 class="card-title">Edit Profile</h5>
-                <?php echo form_open("auth/set_settings", array('enctype'=>'multipart/form-data')); ?>
+                <h3 class="lead">Edit Profile</h3>
+                <?php echo form_open("set_settings", array('enctype'=>'multipart/form-data')); ?>
                 <input type="hidden" id="custId" name="id" value="<?php echo $_SESSION['user_id'];?>">
                     <div class="form-group">
                         <label for="fullname">Email</label>
@@ -44,6 +44,16 @@
                         <label for="city">City</label>
                         <input type="text" name="user_lokasi" value="<?php echo $user['lokasi_user']; ?>" class="form-control" id="city" placeholder="Kotamu sekarang?">
                         <?= form_error('user_lokasi'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Last Education</label>
+                        <input type="text" name="last_education" value="<?php echo $user['last_education']; ?>" class="form-control" id="last_education" placeholder="Pendidikan terakhir?">
+                        <?= form_error('last_education'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Work</label>
+                        <input type="text" name="work" value="<?php echo $user['work']; ?>" class="form-control" id="work" placeholder="Pekerjaan ?">
+                        <?= form_error('work'); ?>
                     </div>
                     <div class="form-group">
                         <label for="exampleTextarea" class="bmd-label-floating">Bio</label>

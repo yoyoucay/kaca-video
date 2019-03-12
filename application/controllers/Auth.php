@@ -239,7 +239,7 @@ class Auth extends CI_Controller {
                 $this->load->view('auth/changepassword', $data);
 
             } else {
-                $this->user_models->forgot_password($email, $this->input->post('password'));
+                $this->user_models->lupa_password($user['id'], $this->input->post('password'));
 
                 redirect('logout');
             }
@@ -324,18 +324,6 @@ class Auth extends CI_Controller {
             return true;
     }
 
-    public function checkPassword2($password)
-    {
-        $user = $this->user_models->get_user('id', $_SESSION['user_id']);
-
-        if (!$this->user_models->checkPassword2($_SESSION['user_id'], $password)) {
-            $this->form_validation->set_message('checkPassword2', 'Password tidak benar');
-            return false;
-        }
-
-        return true;
-    }
-
     public function checkPassword($password)
     {
         $user = $this->user_models->get_user('email',$this->input->post('email'));
@@ -409,65 +397,6 @@ class Auth extends CI_Controller {
         $this->load->view('layouts/footer');
         }
     }
-
-   public function set_settings(){
-        $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-		$data = array();
-        $upload = $this->confide_models->avatarProfile();
-
-        $this->form_validation->set_rules('username', 'Username', 'required|alpha|trim');
-        $this->form_validation->set_rules('fullname', 'Fullname', 'required|callback_checkHurufSpasi');
-        $this->form_validation->set_rules('biodata', 'Biodata', 'max_length[120]');
-        $this->form_validation->set_rules('user_lokasi', 'Lokasi', 'max_length[60]|callback_checkHurufKoma');
-
-        if($this->form_validation->run() === false)
-        {
-            $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-            $this->load->view('layouts/header');
-            $this->load->view('pages/settings', $data);
-            $this->load->view('layouts/footer');
-        } else {
-
-			if($upload['result'] == "success"){ // Jika proses upload sukses
-				 // Panggil function save yang ada untuk menyimpan data ke database
-				$this->confide_models->set_settingsProfile($upload);
-
-				redirect('home'); // Redirect kembali ke halaman awal / halaman view data
-			}else if($upload['result'] == "failed"){ // Jika proses Settings tanpa mengupload foto sukses
-				 // Panggil function save yang ada untuk menyimpan data ke database
-				$this->confide_models->set_settingsProfileZ();
-
-				redirect('home'); // Redirect kembali ke halaman awal / halaman view data
-			}else{ // Jika proses upload gagal
-				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-				die($data['message']);
-            }
-        }
-    }
-    
-    // Ganti Password
-    public function change_password(){
-
-        $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-
-            $this->form_validation->set_rules('password', 'Password', 'required|callback_checkPassword2');
-            $this->form_validation->set_rules('password2', 'Password2', 'required|min_length[6]|max_length[12]');
-            $this->form_validation->set_rules('password3', 'Konfirmasi Password','required|matches[password2]');
-        
-        if ($this->form_validation->run() === false) {
-        $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
-            $this->load->view('layouts/header');
-            $this->load->view('user/pass_settings', $data);
-            $this->load->view('layouts/footer');
-        } else {
-            $this->user_models->c_password($_SESSION['user_id'], $this->input->post('password3'));
-            redirect('user/'.$data['user']['username']);
-        }
-        
-    }
-
-
-    // ===========
 
 	// FEEDBACK FUNCTION
 	 public function view_feedback(){

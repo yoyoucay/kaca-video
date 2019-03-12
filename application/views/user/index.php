@@ -27,7 +27,7 @@
             <div class="dropdown">
                 <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <?php if($_SESSION['photo'] == 0){?>
+                    <?php if($user_item['nama_avatar'] == TRUE){?>
                     <img class="rounded" src="<?php echo base_url('assets/img/user.png') ?>" alt="" style="width:30px;">
                     <?php }else{ ?>
                     <img class="rounded" src="<?php echo base_url('assets/images/avatar/'.$_SESSION['photo']) ?>" alt="" style="width:30px;">
@@ -86,19 +86,19 @@
             <div class="mb-5">
                 <h6>Alamat</h6>
                 <p class="text-secondary">
-                    <?php echo $user_item['lokasi_user'];?></span>
+                    <?php echo $user_item['lokasi_user'];?>
                 </p>
             </div>
             <div class="mb-5">
                 <h6>Pendidikan Terakhir</h6>
                 <p class="text-secondary">
-                    Unknown
+                    <?php echo $user_item['last_education'];?>
                 </p>
             </div>
             <div class="mb-5">
                 <h6>Pekerjaan</h6>
                 <p class="text-secondary">
-                    Unknown
+                    <?php echo $user_item['work'];?>
                 </p>
             </div>
         </div>
@@ -163,21 +163,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <ul class="list-group">
-                    <a href="<?php echo site_url('change') ?>" class="list-group-item">
-                        <i class="material-icons">account_circle</i>
+                <ul class="list-group list-group-flush">
+                    <a href="<?php echo site_url('settings') ?>" class="list-group-item">
+                        <i class="fas fa-user-edit mr-2" style="width:24px;"></i>
                         Edit Profile
                     </a>
                     <a href="#" class="list-group-item">
-                        <i class="material-icons">lock</i>
+                        <i class="fas fa-lock mr-2" style="width:24px;"></i>
                         Change Password
                     </a>
                     <a href="<?php echo site_url('logout') ?>" class="list-group-item">
-                        <i class="material-icons">power_settings_new</i>
+                        <i class="fas fa-sign-out-alt mr-2" style="width:24px;"></i>
                         Log out
                     </a>
                     <a href="#" class="list-group-item">
-                        <i class="material-icons">cancel</i>
+                        <i class="fas fa-sign-out-alt mr-2" style="width:24px;"></i>
                         Cancel
                     </a>
                 </ul>

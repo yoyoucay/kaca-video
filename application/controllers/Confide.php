@@ -67,92 +67,23 @@ class Confide extends CI_Controller {
 // ================================================
 			// Mengedit Status Teks //
 // ================================================
-	public function update_confide($username,$confideid){
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+	public function edit($user_id,$confideid){
 
 		$this->form_validation->set_rules('user_id','Owner Confide', 'required');
 		$this->form_validation->set_rules('input_deskripsi','Deskripsi', 'required');
 
 		if($this->form_validation->run() === FALSE){
-			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
+			$data['content'] = $this->confide_models->get_confideUpdate($user_id,$confideid);
 			$data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
 			$this->load->view('layouts/header');
-			$this->load->view('layouts/navbar_top');
-			$this->load->view('pages/edit', $data);
-			$this->load->view('layouts/navbar_bottom');
+			$this->load->view('layouts/navbar-confide');
+			$this->load->view('confide/edit', $data);
+			$this->load->view('layouts/navbar-end');
 			$this->load->view('layouts/footer');
 		} else {
 			$this->confide_models->set_confideUpdate($confideid);
 
-			redirect('home');
-		}
-	}
-
-// ================================================
-			// Mengedit Status Foto //
-// ================================================
-	public function update_confidePhoto($username,$confideid){
-
-		$data = array();
-		$upload = $this->confide_models->upload_confidePhoto();
-
-
-		$this->load->helper('form');
-		$this->load->library('form_validation');
-
-		$this->form_validation->set_rules('user_id','Owner Confide', 'required');
-		$this->form_validation->set_rules('input_deskripsi','Deskripsi', 'required');
-
-
-		if($this->form_validation->run() === FALSE){
-
-			// Jika ada Form yang Belum diisi dengan benar maka akan meredirect halaman kembali.
-
-			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
-			$this->load->view('layouts/header');
-			$this->load->view('confide/update/editConfidePhoto', $data);
-			$this->load->view('layouts/footer');
-		} else {
-
-			$this->confide_models->set_confidePhotoUpdate($confideid);
-			redirect('home');
-		}
-
-
-
-
-	}
-
-// ================================================
-			// Mengedit Status Video //
-// ================================================
-	public function update_confideVideo($username,$confideid){
-
-		$data = array();
-		$upload = $this->confide_models->upload_confideVideo();
-
-
-		$this->load->helper('form');
-		$this->load->library('form_validation');
-
-		$this->form_validation->set_rules('user_id','Owner Confide', 'required');
-		$this->form_validation->set_rules('judul','Judul', 'required');
-		$this->form_validation->set_rules('input_deskripsi','Deskripsi', 'required');
-
-
-		if($this->form_validation->run() === FALSE){
-
-			// Jika ada Form yang Belum diisi dengan benar maka akan meredirect halaman kembali.
-
-			$data['content'] = $this->confide_models->get_confideUpdate($username,$confideid);
-			$this->load->view('layouts/header');
-			$this->load->view('confide/update/editConfideVideo', $data);
-			$this->load->view('layouts/footer');
-		} else {
-
-			$this->confide_models->set_confideVideoUpdate($confideid);
-			redirect('home');
+			redirect('confide');
 		}
 	}
 
